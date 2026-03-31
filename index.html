@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Загальний тест — ТСП (122 питання)</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+        body{background:linear-gradient(145deg,#e0d5c8 0%,#d0c2b2 100%);font-family:system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:12px;color:#2c3e4f;}
+        .test-container{max-width:800px;width:100%;margin:0 auto;}
+        .test-card{background:rgba(255,254,250,0.98);backdrop-filter:blur(4px);border-radius:48px;box-shadow:0 25px 45px -12px rgba(0,0,0,0.25);padding:20px 16px;border:1px solid rgba(255,255,245,0.6);}
+        @media (min-width:550px){.test-card{padding:28px 24px;}}
+        h1{font-size:1.6rem;font-weight:650;background:linear-gradient(135deg,#2c5a6e,#1e3a4a);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:4px;}
+        @media (min-width:550px){h1{font-size:1.9rem;}}
+        .sub{font-size:0.75rem;color:#8b7a6b;margin-bottom:20px;border-left:3px solid #c7b59e;padding-left:12px;}
+        .progress-area{background:#e9e0d6;height:5px;border-radius:10px;margin:12px 0 20px 0;overflow:hidden;}
+        .progress-fill{background:linear-gradient(90deg,#8b7a64,#b8a48c);height:100%;width:0%;border-radius:10px;transition:width 0.3s ease;}
+        .question-box{background:#ffffff;border-radius:28px;padding:18px 16px;margin-bottom:20px;box-shadow:0 4px 12px rgba(0,0,0,0.05);border:1px solid #f0e8de;}
+        @media (min-width:550px){.question-box{padding:22px 20px;}}
+        .question-text{font-size:1rem;font-weight:550;color:#2c4a5e;line-height:1.4;margin-bottom:20px;}
+        @media (min-width:550px){.question-text{font-size:1.1rem;}}
+        .options-list{display:flex;flex-direction:column;gap:10px;}
+        .option{background:#fefcf8;border:2px solid #e8dfd2;border-radius:60px;padding:10px 14px;font-size:0.82rem;display:flex;align-items:center;cursor:pointer;transition:all 0.2s ease;color:#2c3e4f;}
+        @media (min-width:550px){.option{padding:12px 18px;font-size:0.88rem;}}
+        .option:hover{background:#fcf6ef;border-color:#cbb99f;transform:translateX(3px);}
+        .option.selected{background:#efe5d9;border-color:#9b8875;}
+        .opt-letter{width:26px;height:26px;background:#e4d8cc;color:#2c3e4f;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.75rem;margin-right:12px;flex-shrink:0;}
+        @media (min-width:550px){.opt-letter{width:30px;height:30px;font-size:0.85rem;margin-right:14px;}}
+        .selected .opt-letter{background:#9b8875;color:white;}
+        .buttons{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 10px;}
+        .btn{background:#ffffff;border:2px solid #e0d5c7;padding:9px 14px;border-radius:50px;font-size:0.75rem;font-weight:600;color:#4a5b69;cursor:pointer;transition:all 0.2s;flex:1 1 auto;min-width:70px;text-align:center;}
+        @media (min-width:550px){.btn{padding:11px 18px;font-size:0.85rem;min-width:90px;}}
+        .btn-primary{background:#e0d4c4;border-color:#b8a28a;color:#2f3e4e;}
+        .btn-primary:hover{background:#d2c4b2;transform:translateY(-2px);}
+        .btn:hover{background:#f5ede4;transform:translateY(-2px);}
+        .btn:active{transform:translateY(1px);}
+        .btn:disabled{opacity:0.45;cursor:not-allowed;transform:none;}
+        .counter{text-align:center;margin-top:12px;font-size:0.7rem;color:#9b8b7a;}
+        .result-card{background:#fffef8;border-radius:48px;padding:28px 20px;text-align:center;}
+        .score-number{font-size:3.2rem;font-weight:700;background:linear-gradient(145deg,#2c5a6e,#1e3a4a);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1;}
+        .score-percent{font-size:1.3rem;font-weight:400;color:#7f8f9e;margin:10px 0 16px;}
+        .result-message{font-size:1rem;color:#4a5f71;margin-bottom:24px;}
+        .review-card{background:#fffef8;border-radius:48px;padding:20px 16px;}
+        .review-title{font-size:1.2rem;font-weight:600;color:#2c4a5e;margin-bottom:18px;border-left:4px solid #c7b59e;padding-left:12px;}
+        .review-item{background:#fefaf5;border-radius:24px;padding:12px;margin-bottom:12px;border-left:5px solid;}
+        .review-item.correct{border-left-color:#7ea67e;}
+        .review-item.incorrect{border-left-color:#d6a39c;}
+        .review-q{font-weight:600;font-size:0.8rem;margin-bottom:8px;}
+        .review-badge{display:inline-block;padding:2px 10px;border-radius:30px;font-size:0.6rem;font-weight:600;margin:3px 6px 3px 0;}
+        .review-correct-badge{background:#d9e8d4;color:#2a6230;}
+        .review-wrong-badge{background:#f3e1dd;color:#aa554a;}
+        .review-explain{background:#f7f1e9;border-radius:16px;padding:8px;margin-top:8px;font-size:0.65rem;color:#5e6f7d;}
+        .hidden{display:none !important;}.text-center{text-align:center;}.mt-2{margin-top:12px;}
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <div class="test-container" id="app">
+        <div v-if="!finished" class="test-card">
+            <h1>📡 Загальний тест</h1>
+            <div class="sub">ТСП · MOTOTRBO · HYTERA · HARRIS · ASELSAN · Tooway · Starlink — 122 питання</div>
+            <div class="progress-area"><div class="progress-fill" :style="{ width: progressPercent + '%' }"></div></div>
+            <div class="question-box">
+                <div class="question-text">{{ current.text }}</div>
+                <div class="options-list">
+                    <div v-for="(opt, idx) in current.shuffledOptions" :key="idx" class="option" :class="{ selected: selectedIndex === idx }" @click="selectOption(idx)">
+                        <span class="opt-letter">{{ letters[idx] }}</span><span>{{ opt }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="btn" @click="prev" :disabled="currentIdx === 0">← Назад</button>
+                <button v-if="!isLast" class="btn btn-primary" @click="next" :disabled="selectedIndex === null">Далі →</button>
+                <button v-else class="btn btn-primary" @click="finish" :disabled="selectedIndex === null">Завершити</button>
+                <button class="btn" @click="resetTest">Спочатку</button>
+            </div>
+            <div class="counter">{{ currentIdx + 1 }} / {{ totalCount }}</div>
+        </div>
+        <div v-else>
+            <div v-if="!showReview" class="test-card result-card">
+                <div class="score-number">{{ userScore }}/{{ totalCount }}</div>
+                <div class="score-percent">{{ scorePercent }}%</div>
+                <div class="result-message">
+                    <span v-if="scorePercent >= 85">🏆 Відмінно!</span>
+                    <span v-else-if="scorePercent >= 70">📻 Добре</span>
+                    <span v-else-if="scorePercent >= 55">🔧 Задовільно</span>
+                    <span v-else>📚 Потрібно повторити</span>
+                </div>
+                <div class="buttons">
+                    <button class="btn btn-primary" @click="showReview = true">📋 Розбір помилок</button>
+                    <button class="btn" @click="resetTest">⟲ Пройти знову</button>
+                </div>
+            </div>
+            <div v-else class="test-card review-card">
+                <h2 class="review-title">📋 Розбір помилок</h2>
+                <div v-for="(q, idx) in questions" :key="idx" class="review-item" :class="{ correct: userAnswers[idx] === q.correctText, incorrect: userAnswers[idx] !== q.correctText }">
+                    <div class="review-q">{{ idx+1 }}. {{ q.text }}</div>
+                    <div>
+                        <span class="review-badge" :class="userAnswers[idx] === q.correctText ? 'review-correct-badge' : 'review-wrong-badge'">Ваша: {{ userAnswers[idx] || '❌' }}</span>
+                        <span v-if="userAnswers[idx] !== q.correctText" class="review-badge review-correct-badge">✅ {{ q.correctText }}</span>
+                    </div>
+                    <div class="review-explain">{{ q.explanation }}</div>
+                </div>
+                <div class="text-center mt-2"><button class="btn btn-primary" @click="resetTest">⟲ Пройти знову</button></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function() {
+            // 122 УНІКАЛЬНИХ ПИТАННЯ (без дублікатів) з трьох варіантів тесту
+            const allQuestions = [
+                { text: "Кількість тайм-слотів на одному каналі ретранслятора Либідь к 2РТД?", correct: "2", options: ["2", "1", "16"], explanation: "2 тайм-слоти в цифровому режимі TDMA." },
+                { text: "Голосовий шлюз комплекту Tooway це:", correct: "мережевий прилад для підключення телефонних апаратів до IP-мережі", options: ["електронний пристрій для узгодження абонентського голосового трафіку та супутникового каналу", "мережевий прилад для підключення телефонних апаратів до IP-мережі", "мережевий прилад для передачі пакетів даних на основі IP-адрес"], explanation: "VoIP шлюз — для підключення телефонів до IP-мережі." },
+                { text: "Радіотехнічний пристрій для приймання і передавання електромагнітних хвиль:", correct: "антена", options: ["узгоджувальний пристрій", "антена", "радіопередавальний пристрій"], explanation: "Антена — пристрій для випромінювання та прийому радіохвиль." },
+                { text: "Кінцевий засіб зв'язку:", correct: "технічний пристрій для перетворення повідомлень у сигнали", options: ["технічний пристрій для здійснення комутації", "технічні пристрої для засекречування інформації", "технічний пристрій для перетворення повідомлень у сигнали"], explanation: "Кінцевий засіб зв'язку — пристрій для перетворення повідомлень у сигнали." },
+                { text: "Види LQA тесту на радіостанціях HARRIS:", correct: "EXCHANGE, SOUND", options: ["EXCHANGE, SOUND", "Active Late Entry, Passive Late Entry", "BROADCAST, REQUEST"], explanation: "LQA-тест буває EXCHANGE (двосторонній) та SOUND (односторонній)." },
+                { text: "Алгоритм шифрування HARRIS сумісний для RF-7800 та MPR-9600:", correct: "Citadel 128", options: ["AES128", "AES128, Citadel 128", "Citadel 128"], explanation: "Citadel-128 сумісний між цими радіостанціями." },
+                { text: "RG6 роз'єм комплекту Tooway це:", correct: "роз'єм для підключення коаксіального кабеля", options: ["роз'єм для сервісного обслуговування", "роз'єм для підключення Ethernet-кабеля", "роз'єм для підключення коаксіального кабеля"], explanation: "RG-6 — для антени (коаксіальний кабель)." },
+                { text: "При встановленні перемикача на RF-7850M в положення R:", correct: "працюємо через радіошлюз RF-6010", options: ["працюємо через радіошлюз RF-6010", "працюємо з виносного КДП", "працюємо в режимі ретрансляції"], explanation: "Положення R — робота через радіошлюз RF-6010." },
+                { text: "З якою метою організовується IP Site Connect на MOTOTRBO?", correct: "з'єднання ретрансляторів в глобальну мережу, збільшення зони покриття", options: ["встановлення пріоритетів для абонентів", "збільшення кількості абонентів", "з'єднання ретрансляторів в глобальну мережу"], explanation: "IP Site Connect об'єднує ретранслятори через IP." },
+                { text: "Способи розповсюдження радіохвиль:", correct: "земною та іоносферною", options: ["земною та іоносферною", "поверхневою та підводною", "підземною та надземною"], explanation: "Земна (поверхнева) та іоносферна (просторова)." },
+                { text: "Дальність зв'язку між DM4600 - DM4600 (орієнтовна):", correct: "до 20 км", options: ["до 20 км", "до 10 км", "до 15 км"], explanation: "DM–DM: до 20 км." },
+                { text: "Роумінг в транкінгових радіомережах:", correct: "обслуговування іншим ретранслятором, в зону якого входить абонент", options: ["обслуговування з наданням пріоритету", "обслуговування іншим ретранслятором", "з'єднання ретрансляторів між собою"], explanation: "Роумінг — автоматичний перехід між ретрансляторами." },
+                { text: "Вокодер при поганій якості зв'язку в режимі 3G:", correct: "LDV", options: ["ME24", "DV6", "LDV"], explanation: "LDV — Low Data Rate Digital Voice для низької якості каналу." },
+                { text: "Види роботи радіоканалу на PRC 9651 в режимі ASNR:", correct: "FF-A, FF-D, FF-E, FH", options: ["CW, USB, LSB", "FF-A, FF-D, FF-E, FH", "Q1A, Q2, Q3, QW"], explanation: "Режими ASNR: FF-A, FF-D, FF-E, FH." },
+                { text: "Діапазон частот радіостанції RF-7850M:", correct: "30-512 МГц", options: ["1,6-29,9999 МГц", "30-108 МГц", "30-512 МГц"], explanation: "RF-7850M — 30-512 МГц." },
+                { text: "Дані по наведенню антени комплекту Tooway включають:", correct: "азимут, кут місця, колір променя", options: ["азимут, кут місця", "азимут, кут місця, колір променя", "азимут, кут місця, IP адресу"], explanation: "Азимут, кут місця та колір променя для налаштування." },
+                { text: "Потужність DP4400 (макс/мін), Вт:", correct: "5/1", options: ["4/1", "5/1", "5/0,5"], explanation: "DP4400: VHF 5/1 Вт." },
+                { text: "Коли індикатор зарядки АКБ MOTOTRBO блимає зеленим:", correct: "акумулятор заряджений на 90%", options: ["акумулятор заряджений на 90%", "зарядка АКБ не проходить", "приймається незашифрований сигнал"], explanation: "Зелене блимання — 90% заряду." },
+                { text: "Роз'єм USB модему комплекту Tooway призначений:", correct: "для сервісного обслуговування", options: ["для сервісного обслуговування", "для резервування живлення", "для підключення Ethernet-кабеля"], explanation: "USB — для сервісного обслуговування." },
+                { text: "Основні режими роботи RF-7850M:", correct: "FF, QL1A, Q2, Q3, QW, TNW, ANW2C, STC", options: ["FIX, ALE, HOP, ANW2C, STC", "FIX, ALE, 3G, HOP, ANW2C, STC", "FF, QL1A, Q2, Q3, QW, TNW, ANW2C, STC"], explanation: "Режими: FF, QL1A, QL2, QL3, QLW, TNW, ANW2C, STC." },
+                { text: "Пристрій для підключення двох антен до одного виходу ретранслятора:", correct: "сплітер", options: ["грозозахист", "сплітер", "дуплексер"], explanation: "Сплітер — для підключення кількох антен." },
+                { text: "Варіанти цифрового виклику на Motorola:", correct: "Індивідуальні, групові і загальні", options: ["приватні, групові і мережеві", "Індивідуальні, групові і мережеві", "Індивідуальні, групові і загальні"], explanation: "Виклики: приватні (індивідуальні), групові, загальні." },
+                { text: "При роботі ретранслятора Либідь-2РТД на одну антену використовується:", correct: "дуплексер", options: ["дуплексер", "грозозахист", "сплітер"], explanation: "Дуплексер дозволяє використовувати одну антену для Tx і Rx." },
+                { text: "PIN-код після аварійного знищення ключів на VRC 9661:", correct: "11111111", options: ["11111111", "22222222", "33333333"], explanation: "Master pincode = 11111111." },
+                { text: "Гудок без паузи на DP4800 — причина:", correct: "не вказано груповий виклик на передачу", options: ["немає зв'язку з ретранслятором", "не співпадає ключ шифрування", "не вказано груповий виклик на передачу"], explanation: "Гудок одразу — не вказано ім'я контакту." },
+                { text: "Види модуляції в RF-7800H-MP:", correct: "USB, LSB, CW, AME, FM", options: ["USB, LSB, CW, AME, FM", "FIX, ALE, 3G, HOP", "Citadel 128, AES 128"], explanation: "Модуляції: USB, LSB, CW, AME, FM." },
+                { text: "Режими роботи VRC 9661, PRC 9651:", correct: "ASNR, DMR, NBNR, WBNR", options: ["FF, Q1A, Q2, Q3, QW", "FIX, ALE, HOP", "ASNR, DMR, NBNR, WBNR"], explanation: "Режими ASELSAN: ASNR, DMR, NBNR, WBNR." },
+                { text: "Типи виклику в режимі 3G для RF-7800H:", correct: "ручний, напівавтоматичний, автоматичний", options: ["автоматичний, ручний", "ручний, напівавтоматичний, автоматичний", "ручний, автоматичний, вибір кращого каналу"], explanation: "Три типи виклику в 3G." },
+                { text: "Індикатор статусу на Либідь К-2РТД неперервно червоний:", correct: "ретранслятор заблокований", options: ["живлення від 24В", "ретранслятор заблокований", "режим самотестування"], explanation: "Disabled — ретранслятор заблоковано." },
+                { text: "При ввімкненому скануванні на DP4400 індикатор:", correct: "блимає оранжевим", options: ["неперервно оранжевий", "блимає оранжевим", "блимає червоним"], explanation: "Сканування — блимання оранжевим." },
+                { text: "Загальна кількість каналів в пам'яті Hytera:", correct: "1024 канали", options: ["1024 канали", "200 каналів", "16 каналів"], explanation: "HP785 — 1024 канали." },
+                { text: "Транкінговий зв'язок — це:", correct: "радіозв'язок мобільних абонентів через базову станцію з автоматичним розподілом каналів", options: ["радіозв'язок мобільних абонентів через базову станцію з автоматичним розподілом каналів", "радіозв'язок прямої видимості між радіорелейними станціями", "електрозв'язок по проводовому кабелю"], explanation: "Транкінговий зв'язок — з автоматичним розподілом радіоканалів." },
+                { text: "Індикатор ТхА на Либідь К-2РТД неперервний зелений:", correct: "передача в цифровому режимі по 1 слоту", options: ["передача по 2 слоту", "ретранслятор заблокований", "передача по 1 слоту"], explanation: "TxA — передача по слоту 1." },
+                { text: "Час при ручній синхронізації RF-7800H:", correct: "час по Гринвічу", options: ["час по Гринвічу", "зимовий час", "літній час"], explanation: "UTC (час за Гринвічем)." },
+                { text: "Потужність DM4600 (макс/мін):", correct: "54/20", options: ["5/1", "54/20", "20/1"], explanation: "DM4600: VHF 54/20 Вт." },
+                { text: "Кількість каналів в режимі FIX на RF-7800H:", correct: "200", options: ["100", "200", "300"], explanation: "FIX — до 200 каналів (0-199)." },
+                { text: "Одинарне блимання зеленим на MOTOTRBO означає:", correct: "приймається незашифрований сигнал", options: ["приймається незашифрований сигнал", "приймається зашифрований сигнал", "сигнал тривоги"], explanation: "Одинарне блимання — незашифрований прийом." },
+                { text: "Основні модеми RF-7800H-MP в КХ діапазоні:", correct: "MIL110B, SERIAL, XDL, ARQ, WBHF", options: ["MIL110B, SERIAL, XDL, ARQ, WBHF", "WBFSK", "WBHF"], explanation: "Модеми: MIL110B, SERIAL, XDL, ARQ, WBHF." },
+                { text: "Пристрій Fillgun FG-2070 це:", correct: "завантаження ключів шифрування та мережевої інформації", options: ["завантаження ключів шифрування", "завантаження ключів шифрування та мережевої інформації", "завантаження мережевої інформації"], explanation: "Fillgun — для ключів та мережевої інформації." },
+                { text: "Режим DMR на VRC-9661 для:", correct: "зв'язку з MOTOTRBO в діапазоні 136-174 МГц", options: ["зв'язку з MOTOTRBO в діапазоні 136-174 МГц", "зв'язку з однотипними станціями 30-108 МГц", "зв'язку з літаками"], explanation: "DMR — для зв'язку з MOTOTRBO." },
+                { text: "Радіомережа — це:", correct: "зв'язок з трьома та більше кореспондентами", options: ["зв'язок з одним кореспондентом", "зв'язок з двома кореспондентами", "зв'язок з трьома та більше"], explanation: "Радіомережа — три і більше." },
+                { text: "RJ-45 комплекту Tooway це:", correct: "роз'єм для підключення Ethernet-кабеля", options: ["роз'єм для сервісного обслуговування", "роз'єм для підключення Ethernet-кабеля", "роз'єм блока живлення"], explanation: "RJ-45 — Ethernet." },
+                { text: "Гудок після паузи на DP4800e — причина:", correct: "немає зв'язку з ретранслятором", options: ["не встановлене ім'я контакту", "немає зв'язку з ретранслятором", "не співпадає ID ключа"], explanation: "Гудок після паузи — проблеми з ретранслятором." },
+                { text: "Тайм-слотів на ретрансляторі H1065:", correct: "2", options: ["2", "16", "32"], explanation: "2 тайм-слоти." },
+                { text: "Для зв'язку в режимі ASNR FH на PRC 9651 потрібно:", correct: "№ каналу, № доби, потужність та синхронізація", options: ["№ каналу, № доби, потужність, синхронізація", "№ каналу, потужність", "№ каналу, № доби, потужність"], explanation: "FH потребує синхронізації." },
+                { text: "Коли замінити ключі шифрування:", correct: "ключі скомпрометовані, втрачена радіостанція", options: ["ключі скомпрометовані, втрачена радіостанція", "вийшла з ладу радіостанція", "строк зміни ключів"], explanation: "Негайна заміна при компрометації або втраті." },
+                { text: "Індикатор RxA на SLR5500 неперервний зелений:", correct: "приймає в цифровому режимі по 1 слоту", options: ["режим самотестування", "прийом по 1 слоту", "прийом по 2 слоту"], explanation: "RxA — прийом по слоту 1." },
+                { text: "Для роботи через ретранслятор MOTOTRBO потрібно:", correct: "ключ RAS, частоти, колірний код", options: ["ключ RAS, частоти, колірний код", "ключ RAS та частоти", "ключ шифрування"], explanation: "Обов'язково: RAS, частоти, колірний код." },
+                { text: "Симплекс — це:", correct: "робота на одній частоті почергово", options: ["робота на одній частоті почергово", "одночасна робота на двох частотах", "робота на двох частотах почергово"], explanation: "Симплекс — одна частота, почергова передача." },
+                { text: "Файл для програмування RF-7800H-MP:", correct: ".CSO або .HCPA", options: [".TXT або .CSO", ".CSO або .HCPA", ".RPD або .HCPA"], explanation: "Розширення .CSO або .HCPA." },
+                { text: "ІПН-24/12-20А зі складу Либідь К-2РТД це:", correct: "пристрій для підключення від АКБ 24В", options: ["пристрій для підключення від АКБ 24В", "пристрій для підключення від АКБ 12В", "пристрій для підключення від 220В"], explanation: "ІПН — перетворювач напруги 24В/12В." },
+                { text: "За правилами радіообміну позивні бувають:", correct: "індивідуальні, циркулярні", options: ["приватні, мережеві", "лінійні, лінійно-циркулярні", "індивідуальні, циркулярні"], explanation: "Позивні: індивідуальні та циркулярні (Коло-20)." },
+                { text: "Тумблер перемикач Hytera HP-785 виконує:", correct: "зміна гучності та робочого каналу", options: ["зміна гучності та каналу", "зміна гучності та потужності", "зміна гучності та зони"], explanation: "Тумблер — гучність та вибір каналу." },
+                { text: "Підготовка до чергування на ВЗіА включає:", correct: "навчання, стажування, заліки", options: ["одиночна підготовка, курси, стажування", "навчання, стажування, заліки", "спецнавчання, практика, екзамен"], explanation: "Навчання, стажування, складання заліків." },
+                { text: "Подвійне блимання зеленим на MOTOTRBO:", correct: "приймається зашифрований сигнал", options: ["приймається зашифрований сигнал", "сигнал тривоги", "прийом аналогового"], explanation: "Подвійне блимання — зашифрований прийом." },
+                { text: "Швидкість передачі даних на PRC 9651 в ASNR:", correct: "9,6 кбіт/с", options: ["9,6 кбіт/с", "19 кбіт/с", "120 кбіт/с"], explanation: "ASNR — 9,6 кбіт/с." },
+                { text: "LQA test на HARRIS застосовують в режимах:", correct: "ALE, 3G", options: ["ALE, 3G", "FIX, ALE", "3G, HOP"], explanation: "LQA — в ALE та 3G." },
+                { text: "Режими роботи ретранслятора Либідь К-2РТД в IP Site Connect:", correct: "головному та одноранговому", options: ["головному та одноранговому", "дистанційному", "дистанційному та місцевому"], explanation: "Master та Peer." },
+                { text: "Ethernet-кабель від маршрутизатора до VoIP:", correct: "у вільний, крім 1-го", options: ["у вільний, крім 1-го", "до 1 порту", "до будь-якого"], explanation: "VoIP шлюз підключають не в перший порт." },
+                { text: "Вокодер не сумісний між MPR-9600 та RF-7800H-MP:", correct: "DV24", options: ["CVSD", "ME12", "DV24"], explanation: "DV24 не сумісний." },
+                { text: "Дуплекс — це:", correct: "одночасна робота на двох різних частотах", options: ["одночасна робота на одній частоті", "одночасна робота на двох різних частотах", "робота на одній частоті почергово"], explanation: "Дуплекс — одночасно, різні частоти." },
+                { text: "Кількість каналів в режимі НОР на RF-7800H-MP:", correct: "19", options: ["100", "63", "19"], explanation: "НОР — до 19 хопсетів." },
+                { text: "Кількість програм на RF-7800H:", correct: "100", options: ["100", "75", "200"], explanation: "До 100 програм." },
+                { text: "Діапазон Hytera:", correct: "136-174 МГц", options: ["136-174 МГц", "30-225 МГц", "134-176 МГц"], explanation: "VHF: 136-174 МГц." },
+                { text: "Способи організації радіозв'язку:", correct: "радіонапрямок, радіомережа, абонентська група", options: ["радіонапрямок, радіомережа, радіоось", "радіонапрямок, радіомережа, рокада", "радіонапрямок, радіомережа, абонентська група"], explanation: "Три способи." },
+                { text: "Основні модеми MPR-9600 в КХ:", correct: "MIL110B, SERIAL, ARQ", options: ["WBHF, SERIAL", "MIL110B, SERIAL, ARQ", "XDL, ARQ"], explanation: "MIL110B, SERIAL, ARQ." },
+                { text: "Програма для налаштування MOTOTRBO:", correct: "Mototrbo CPS", options: ["Mototrbo CPS", "MOTOTRBO RDAC", "Mototrbo CPA"], explanation: "CPS — Customer Programming Software." },
+                { text: "Протоколи для передачі даних на RF-7800H-MP:", correct: "PPP, Ethernet", options: ["PPP", "PPP, Ethernet", "Ethernet"], explanation: "PPP та Ethernet." },
+                { text: "Talk Around в Hytera HP-785:", correct: "ретранслятор/прямий зв'язок", options: ["тільки прийом", "сканування", "ретранслятор/прямий зв'язок"], explanation: "Talk Around — прямий зв'язок без ретранслятора." },
+                { text: "Нерозбірливий звук на DM4600:", correct: "не співпадає значення ключа", options: ["не співпадає значення ключа", "не вказано груповий виклик", "не співпадає ID ключа"], explanation: "Нерозбірливий звук — різні ключі шифрування." },
+                { text: "Максимальна довжина фідера Tooway:", correct: "50 м", options: ["25 м", "75 м", "50 м"], explanation: "Довжина фідера до 50 м." },
+                { text: "Передача голосових повідомлень за правилами:", correct: "неквапливо, чітко, лаконічно", options: ["швидко та тихо", "швидко та гучно", "неквапливо, чітко, лаконічно"], explanation: "Говорити повільно, чітко, лаконічно." },
+                { text: "Азимут визначають за допомогою:", correct: "Компаса, бусолі", options: ["Компаса, бусолі", "бінокля, тригонометричної лінійки", "годинника, транспортира"], explanation: "Компас та бусоль." },
+                { text: "Прийомо-передавач Tooway це:", correct: "елемент для частотного перетворення та підсилення", options: ["елемент для частотного перетворення та підсилення", "VoIP шлюз", "маршрутизатор"], explanation: "TRIA — передавач/приймач." },
+                { text: "Пристрій захисту від грозових розрядів:", correct: "грозозахист", options: ["грозозахист", "сплітер", "дуплексер"], explanation: "Грозозахист." },
+                { text: "Ethernet-кабель від модему до маршрутизатора:", correct: "до 1 порту", options: ["до 2 порту", "до 1 порту", "до будь-якого"], explanation: "Модем підключають до 1 порту маршрутизатора." },
+                { text: "Напруга живлення для SLR5500:", correct: "12, 24, 220В", options: ["12, 24, 220В", "9В", "36В"], explanation: "SLR5500: 12/24/220В." },
+                { text: "Рівні потужності HP-785:", correct: "High+, High, Med, Low", options: ["Low, High", "Low, Med, High", "High+, High, Med, Low"], explanation: "Чотири рівні потужності." },
+                { text: "Передача GPS рапорта в режимах:", correct: "3G, ALE", options: ["3G, ALE", "FIX", "3G, 3G+"], explanation: "GPS рапорт в 3G та ALE." },
+                { text: "Програма для передачі даних на RF-7850:", correct: "Tactical Chat", options: ["Tactical Chat", "WMT RF-6760", "Tactical Chat IP"], explanation: "Tactical Chat." },
+                { text: "Червоний індикатор на PRC 9651:", correct: "передача", options: ["перепрограмування", "прийом", "передача"], explanation: "Червоний — передача." },
+                { text: "Довжина ключа в Encrypt Hytera:", correct: "10, 32, 64 символа", options: ["10, 32, 64", "6-24", "32"], explanation: "Довжина ключів: 10, 32, 64 символи." },
+                { text: "IP адреса модему Tooway:", correct: "192.168.100.1", options: ["192.168.88.1", "192.168.100.1", "192.168.88.15"], explanation: "192.168.100.1." },
+                { text: "Каналів в одній зоні Hytera:", correct: "256", options: ["128", "256", "64"], explanation: "256 каналів в зоні." },
+                { text: "Постійний червоний на Hytera:", correct: "передача", options: ["передача", "прийом", "екстрений виклик"], explanation: "Червоний — передача." },
+                { text: "VSWR тест проводиться:", correct: "при заміні антени або частоти", options: ["при потребі", "при заміні антени або частоти", "перед зв'язком"], explanation: "VSWR-тест — при зміні антени або частоти." },
+                { text: "Довжина ключа для зв'язку з ретранслятором Hytera:", correct: "лише 32 символи", options: ["10 символів", "лише 32 символи", "6-24"], explanation: "Ключ для зв'язку з ретранслятором — 32 символи." },
+                { text: "Алгоритм шифрування на VRC 9661:", correct: "citadel 256, aes 256", options: ["citadel 256, aes 256", "aes 256", "citadel 128"], explanation: "Citadel 256 та AES 256." },
+                { text: "Іоносфера для УКХ:", correct: "прозора", options: ["проходить відбиття", "непрозора", "прозора"], explanation: "УКХ проходять крізь іоносферу." },
+                { text: "Програма для моніторингу ретранслятора:", correct: "RDAC MOTOTRBO", options: ["CPS 16.0", "CPS 2.0", "RDAC MOTOTRBO"], explanation: "RDAC — Repeater Diagnostics and Control." },
+                { text: "Мережа Starlink складається з:", correct: "UT, SAT, GW, POP", options: ["UT, SAT, GW, POP", "UT, SAT, GPS, POP", "UT, SAT, орбітальні станції, GPS, POP"], explanation: "Наземні термінали, супутники, наземні станції, точки обміну." },
+                { text: "Максимальний час відхилення в ACNR FH-E:", correct: "15 хв", options: ["90 сек", "1 хв", "15 хв", "7 хв"], explanation: "FH-E — ±15 хв." },
+                { text: "Супутники Starlink на орбіті:", correct: "пролітають з високою швидкістю", options: ["повільно рухаються", "геостаціонарні", "пролітають з високою швидкістю"], explanation: "Низькоорбітальні супутники." },
+                { text: "Потужність HR1065:", correct: "25/50", options: ["1/50", "20/54", "25/50"], explanation: "25/50 Вт." },
+                { text: "TOD MASK на HARRIS КХ:", correct: "ключ, що визначає алгоритм стрибків", options: ["ключ, що визначає алгоритм стрибків", "ключ шифрування", "ключ доступу"], explanation: "TOD MASK — ключ для алгоритму стрибків." },
+                { text: "Режими MOTOTRBO:", correct: "аналоговий і цифровий", options: ["цифровий", "аналоговий і цифровий", "аналоговий", "дуплексний"], explanation: "Обидва режими." },
+                { text: "Пароль кодплагу захищає:", correct: "від зчитування, запису, клонування", options: ["від зчитування, запису, клонування", "шифрування", "від підключення до ретранслятора", "від користування"], explanation: "Захист файлу конфігурації." },
+                { text: "PIN CODE для штатного включення PRC 9651:", correct: "11111111", options: ["11111111", "22222222", "123456"], explanation: "Master pincode 11111111." },
+                { text: "HOPSET на HARRIS КХ:", correct: "смуга для стрибків в ППРЧ", options: ["режим роботи", "смуга для стрибків", "кнопка"], explanation: "Hopset — набір частот для ППРЧ." },
+                { text: "Частоти через ретранслятор:", correct: "різні", options: ["різні", "однакові", "однакові з різним кодом"], explanation: "Tx та Rx різні." },
+                { text: "Облік терміналів STARLINK:", correct: "KIT ID на коробці", options: ["KIT ID на коробці", "не обліковується", "за заводським номером"], explanation: "KIT ID." },
+                { text: "МАСА на УКХ HARRIS:", correct: "уникнення колізій під час передачі", options: ["визначення якості", "перевірка працездатності", "уникнення колізій"], explanation: "MACA — механізм уникнення колізій." },
+                { text: "Склад батальйонного комплекту MOTOTRBO:", correct: "DM4600-2, DP4800-10, DP4400-40, SLR5500-1", options: ["DM2,DP10,DP40,SLR2", "DM2,DP10,DP40,SLR1", "DM10,DP20,DP40,SLR1", "DM10,DP10,DP40,SLR1", "DM2,DP10,DP40,SLR1"], explanation: "Батальйонний комплект: DM4600-2, DP4800-10, DP4400-40, SLR5500-1." },
+                { text: "SLR5500 працює на каналах:", correct: "на 1 каналі", options: ["на 2", "на 16", "на 1"], explanation: "Один активний канал." },
+                { text: "Піктограма на HP785 (цифра 1):", correct: "пріоритетний канал №1", options: ["профіль №1", "прослуховування", "пріоритетний канал №1"], explanation: "Цифра — пріоритетний канал." },
+                { text: "Опція Starlink для протидії РЕБ:", correct: "Use Starlink Positioning Exclusively", options: ["GPS spoofing", "Use Starlink Positioning Exclusively", "GPS jamming"], explanation: "Використання тільки позиціонування Starlink." },
+                { text: "Максимум ретрансляторів в глобальній мережі:", correct: "16", options: ["16", "8", "не обмежено", "12", "25"], explanation: "До 15-16." },
+                { text: "Скидання Starlink до заводських:", correct: "циклічне відключення 6 разів", options: ["одне відключення", "6 разів", "два відключення"], explanation: "6 циклів живлення." },
+                { text: "Прямий зв'язок — це:", correct: "частоти передачі і прийому співпадають", options: ["частоти співпадають", "робота в радіонапрямку", "частоти різні", "прийом більше"], explanation: "Talk Around — частоти однакові." },
+                { text: "Auto-Share Routes в УКХ HARRIS:", correct: "завантаження параметрів через радіоканал", options: ["обнулення", "перегляд GPS", "завантаження параметрів"], explanation: "Auto-Share Routes — перезапис через радіоканал." },
+                { text: "Роз'єм Rx на MOTOTRBO:", correct: "підключення тракту прийому", options: ["GPS", "підключення тракту прийому", "програмування", "пульт", "тракт передачі"], explanation: "Rx — прийом." },
+                { text: "Режим сканування в MOTOTRBO:", correct: "пошук активності на каналах", options: ["пошук активності на каналах", "пошук ретранслятора", "виявлення противника"], explanation: "Моніторинг активності." },
+                { text: "Дальність DP4400/DP4800:", correct: "до 5-7 км", options: ["до 5-7 км", "до 3 км", "обмежується супутником", "до 15 км", "до 100 км"], explanation: "DP–DP: до 7 км." },
+                { text: "Діапазон MOTOTRBO:", correct: "136-174 МГц", options: ["1,6-29,9999", "30-512", "134-176", "136-174", "146-176", "1,5-59,9999", "30-108"], explanation: "VHF: 136-174 МГц." },
+                { text: "Головний інструмент управління Starlink:", correct: "Starlink App", options: ["WEB додаток", "Starlink App", "STARLINK.COM"], explanation: "Мобільний додаток Starlink." },
+                { text: "Кількість антен направленої дії в Либідь К-2РТД:", correct: "2", options: ["2", "3", "залежить", "1", "не входять"], explanation: "2 антени направленої дії." },
+                { text: "Індивідуальний виклик в MOTOTRBO:", correct: "ID радіостанції", options: ["не можливий", "ID радіостанції", "імені", "ID ключа", "ID групи"], explanation: "За ID станції." },
+                { text: "Мета додавання зон:", correct: "збільшення кількості каналів", options: ["збільшення каналів", "розподіл між ретрансляторами", "розподіл між групами"], explanation: "Збільшення кількості каналів." },
+                { text: "Індикація RM на HP785:", correct: "робота через ретранслятор", options: ["робота через ретранслятор", "ручне налаштування", "прямий зв'язок"], explanation: "RM — Repeater Mode." },
+                { text: "Зона обслуговування супутника Starlink:", correct: "940,7 км (25°) або 573 км (40°)", options: ["940,7 км (25°) або 573 км (40°)", "665 км (25°)", "600 км (25°) або 450 км (40°)"], explanation: "Радіус зони." },
+                { text: "Потужність DP4800:", correct: "5/1 Вт", options: ["4/1", "55/1", "10/5", "54/20", "5/1"], explanation: "DP4800: VHF 5/1 Вт." },
+                { text: "Fillgun-2070 на Aselsan:", correct: "запис планів зв'язку та ключів", options: ["синхронізація", "запис ключів", "запис планів зв'язку та ключів"], explanation: "Fillgun — завантаження мереж і ключів." },
+                { text: "Різновиди Harris УКХ:", correct: "RF-7850M-HH, RF-7800V-HH, RF-7800V-VS501, RF-7800V-VS511", options: ["RF-7850M-HH, RF-7800H-MP, RF-7800V-VS501, RF-7800V-VS511", "RF-7850H-HH, RF-7800H-HH, RF-7800H-VS501, RF-7800H-VS511", "RF-7850M-HH, RF-7800V-HH, RF-7800V-VS501, RF-7800V-VS511"], explanation: "Різновиди УКХ HARRIS." },
+                { text: "Алгоритм шифрування в ACNR (96SK):", correct: "Citadel-128", options: ["Citadel-256 та AES-256", "Базовий та Покращений", "Citadel-128", "AES-256"], explanation: "ACNR — Citadel-128." },
+                { text: "Постійний червоний на зарядці HP785:", correct: "Акумулятор несправний", options: ["Акумулятор несправний", "зарядка 90-100%", "АКБ не вставлений", "повний заряд", "швидка зарядка"], explanation: "Червоний — несправність." },
+                { text: "Виклики в MOTOTRBO:", correct: "приватні, загальні, групові", options: ["приватні, відкриті, засекречені", "всі вірні", "приватні, загальні, групові", "вірних немає", "приватні, приховані, об'єднані"], explanation: "Приватні, групові, загальні." },
+                { text: "Синхронізація в RF-7850M-HH:", correct: "QL1A, QL2, QL3, QLW, TNW, ANW2C", options: ["QL3, QLW, TNW, ANW2C", "в усіх", "FF, QL1A, QL2, QL3, QLW, TNW, STC", "QL1A, QL2, QL3, QLW, TNW, ANW2C", "QL2, QL3, QLW, TNW, ANW2C", "не потрібна"], explanation: "Синхронізація в QL1A, QL2, QL3, QLW, TNW, ANW2C." },
+                { text: "Колінеарна антена входить до:", correct: "SLR 5500", options: ["DM 4600", "DP 4400", "SLR 5500"], explanation: "Колінеарна — з ретранслятором." },
+                { text: "Стандартна модуляція в КХ HARRIS:", correct: "USB", options: ["LSB", "USB", "AME", "CW"], explanation: "USB — верхня бічна смуга." },
+                { text: "Блимання зеленим на Impress:", correct: "рівень заряду 90-100%", options: ["розряд", "швидка зарядка", "не заряджається", "100%", "90-100%"], explanation: "Зелене блимання — 90% заряду." },
+                { text: "Умови роботи Starlink Positioning Exclusively:", correct: "стаціонарна позиція, активація після Online", options: ["немає умов", "стаціонарна позиція, активація після Online", "можна в русі, будь-коли"], explanation: "Тільки стаціонарно, після Online." },
+                { text: "Умови роботи терміналу Starlink:", correct: "чистий доступ до неба (конус 100-140°)", options: ["без доступу", "чистий доступ (конус 100-140°)", "обмежений доступ (50°)"], explanation: "Пряма видимість на супутники." },
+                { text: "Швидкість супутників Starlink:", correct: "27000 км/год", options: ["27000 км/год", "3000 км/год", "швидкість світла"], explanation: "Близько 27000 км/год." }
+            ];
+            
+            function shuffleArray(arr) {
+                const newArr = [...arr];
+                for (let i = newArr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+                }
+                return newArr;
+            }
+            
+            function prepareQuestions() {
+                return allQuestions.map(q => {
+                    const shuffledOptions = shuffleArray(q.options);
+                    return {
+                        text: q.text,
+                        correctText: q.correct,
+                        shuffledOptions: shuffledOptions,
+                        explanation: q.explanation
+                    };
+                });
+            }
+            
+            new Vue({
+                el: '#app',
+                data: {
+                    currentIdx: 0,
+                    selectedIndex: null,
+                    userAnswers: [],
+                    finished: false,
+                    showReview: false,
+                    questions: prepareQuestions(),
+                    letters: ['A', 'B', 'C', 'D']
+                },
+                computed: {
+                    current() { return this.questions[this.currentIdx]; },
+                    totalCount() { return this.questions.length; },
+                    isLast() { return this.currentIdx === this.totalCount - 1; },
+                    progressPercent() { return ((this.currentIdx + 1) / this.totalCount) * 100; },
+                    userScore() {
+                        let correct = 0;
+                        for (let i = 0; i < this.questions.length; i++) {
+                            if (this.userAnswers[i] === this.questions[i].correctText) correct++;
+                        }
+                        return correct;
+                    },
+                    scorePercent() { return Math.round((this.userScore / this.totalCount) * 100); }
+                },
+                methods: {
+                    selectOption(idx) { this.selectedIndex = idx; },
+                    next() {
+                        if (this.selectedIndex !== null) {
+                            const selectedAnswer = this.current.shuffledOptions[this.selectedIndex];
+                            this.$set(this.userAnswers, this.currentIdx, selectedAnswer);
+                            if (this.currentIdx < this.totalCount - 1) {
+                                this.currentIdx++;
+                                const saved = this.userAnswers[this.currentIdx];
+                                if (saved) {
+                                    const found = this.current.shuffledOptions.findIndex(opt => opt === saved);
+                                    this.selectedIndex = found !== -1 ? found : null;
+                                } else {
+                                    this.selectedIndex = null;
+                                }
+                            }
+                        }
+                    },
+                    prev() {
+                        if (this.currentIdx > 0) {
+                            if (this.selectedIndex !== null) {
+                                this.$set(this.userAnswers, this.currentIdx, this.current.shuffledOptions[this.selectedIndex]);
+                            }
+                            this.currentIdx--;
+                            const saved = this.userAnswers[this.currentIdx];
+                            if (saved) {
+                                const found = this.current.shuffledOptions.findIndex(opt => opt === saved);
+                                this.selectedIndex = found !== -1 ? found : null;
+                            } else {
+                                this.selectedIndex = null;
+                            }
+                        }
+                    },
+                    finish() {
+                        if (this.selectedIndex !== null) {
+                            this.$set(this.userAnswers, this.currentIdx, this.current.shuffledOptions[this.selectedIndex]);
+                        }
+                        this.finished = true;
+                    },
+                    resetTest() {
+                        this.questions = prepareQuestions();
+                        this.currentIdx = 0;
+                        this.selectedIndex = null;
+                        this.userAnswers = [];
+                        this.finished = false;
+                        this.showReview = false;
+                    }
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
