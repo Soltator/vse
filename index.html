@@ -58,7 +58,7 @@
 <div class="test-container" id="app">
     <div v-if="!finished" class="test-card">
         <h1>📡 Загальний тест</h1>
-        <div class="sub">ТСП · MOTOTRBO · HYTERA · HARRIS · ASELSAN · Tooway · Starlink — 122 унікальні питання</div>
+        <div class="sub">ТСП · MOTOTRBO · HYTERA · HARRIS · ASELSAN · Tooway · Starlink — <strong>122 унікальні питання</strong></div>
         <div class="progress-area"><div class="progress-fill" :style="{ width: progressPercent + '%' }"></div></div>
         <div class="question-box">
             <div class="question-text">{{ current.text }}</div>
@@ -108,7 +108,7 @@
 <script>
 (function() {
     // =============================================================
-    // 122 УНІКАЛЬНИХ ПИТАННЯ (повністю ідентичні тестам ЕНАВР)
+    // 122 УНІКАЛЬНИХ ПИТАННЯ (ретельно перевірено, дублікати видалено)
     // =============================================================
     const allQuestions = [
         { text: "Кількість тайм-слотів на одному каналі ретранслятора Либідь к 2РТД?", correct: "2", options: ["2", "1", "16"], explanation: "2 тайм-слоти в цифровому режимі TDMA." },
@@ -252,12 +252,12 @@
         { text: "З якою швидкістю рухаються супутники STARLINK?", correct: "пролітають в небі зі швидкістю 27000 км/год", options: ["пролітають в небі зі швидкістю 27000 км/год", "пролітають в небі зі швидкістю 3000 км/год", "пролітають в небі зі швидкістю світла"], explanation: "Близько 27000 км/год." }
     ];
     
-    // Перевірка унікальності текстів питань
-    const uniqueCheck = new Set();
+    // Перевірка унікальності
+    const uniqueSet = new Set();
     for (const q of allQuestions) {
-        uniqueCheck.add(q.text);
+        uniqueSet.add(q.text);
     }
-    console.log(`✅ Кількість унікальних питань: ${uniqueCheck.size} (очікувалось 122)`);
+    console.log(`✅ Унікальних питань: ${uniqueSet.size} (всього у масиві: ${allQuestions.length})`);
     
     function shuffleArray(arr) {
         const newArr = [...arr];
